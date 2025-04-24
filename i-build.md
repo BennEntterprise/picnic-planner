@@ -18,9 +18,21 @@ I'm going to impost the following constraints to make sure this coding task can 
 
 ## Setting my local environment
 
+### Overview
+
 My preferred stack (based on comfort, not necessarily the right tool for this task) is Full-Stack Typescript (react and express) with a Postgres persistence layer and a redis cache. I'm going to scaffold all of this not as a monolith, but as monorepo utilizing [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces) and likely [turborepo](https://turborepo.com/). Turborepo builds on workspaces by allowing caching npm builds and also enabling some nice workflows when running scripts across multiple project. 
 
 Each project should be able to run on it's own (they are afterall each their own NPM project) however the intendend development flow is to use [Docker](https://www.docker.com/) and the docker-compose so I will focus on that flow.
 
 (paused here to go write the beginning of the [CONTRIBUTING.md](./CONTRIBUTING.md) document.)
 (I've just finished the beginning of the contributing document which outlines the requirements and includes the `install` and `dev` commands. Now let's into building a bunch of scaffolding code.)
+
+### Npm Workspaces and Turbo Repo
+
+I'm going to set up 2 projects within the `apps` folder, a frontend and backend. 
+
+`npm init -w apps/fr`
+`npm init -w apps/be`
+
+This gives me an empty project in those locations each with their own package.json file. I also need to create/update a `.gitignore` to exclude node_modules.
+

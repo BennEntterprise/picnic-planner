@@ -1,0 +1,12 @@
+{
+  "name": "fe",
+  "version": "0.0.1",
+  "description": "a frontend for picnic-planner",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/BennEntterprise/picnic-planner/issues"
   },
-  "homepage": "https://github.com/BennEntterprise/picnic-planner#readme"
+  "homepage": "https://github.com/BennEntterprise/picnic-planner#readme",
+  "workspaces": [
+    "apps/be",
+    "apps/fe"
+  ]
 }
