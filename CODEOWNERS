@@ -1,0 +1,9 @@
+# Picnic Planner Codeowners
+
+# Maintainers of the upstream fork decide when to change license or README.md requirements
+
+LICENCE     @jgretz
+README.md   @jgretz
+
+# All others go to the Software Architect
+*           @BennEntterprise
