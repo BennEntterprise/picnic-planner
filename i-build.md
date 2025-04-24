@@ -29,6 +29,7 @@ Each project should be able to run on it's own (they are afterall each their own
 
 ### Npm Workspaces and Turbo Repo
 
+#### Set the workspaces
 I'm going to set up 2 projects within the `apps` folder, a frontend and backend. 
 
 `npm init -w apps/fr`
@@ -36,3 +37,8 @@ I'm going to set up 2 projects within the `apps` folder, a frontend and backend.
 
 This gives me an empty project in those locations each with their own package.json file. I also need to create/update a `.gitignore` to exclude node_modules.
 
+#### Scaffold basic apps in each workspace
+
+I'll need a react app in the fe and an express app in the backend, both should use typescript. 
+
+I opt for the [quickstart guide for vite](https://vite.dev/guide/) using the command `npm create vite@latest . -- --template react-ts` to scaffold a frontend.
