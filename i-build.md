@@ -42,3 +42,10 @@ This gives me an empty project in those locations each with their own package.js
 I'll need a react app in the fe and an express app in the backend, both should use typescript. 
 
 I opt for the [quickstart guide for vite](https://vite.dev/guide/) using the command `npm create vite@latest . -- --template react-ts` to scaffold a frontend.
+
+[This blog](https://blog.logrocket.com/express-typescript-node/) provides a fairly good start for an express backend but I will want to include [drizzleORM](https://orm.drizzle.team/) so I won't follow this exactly as I scaffold my express project. But here's what I'll be happy to steal for the sake of speed:
+
+- `npm install express dotenv npm install -D typescript ts-node @types/node @types/express nodemon eslint prettier` gets me some basic dependencies I'll need (both production and development). 
+- `npx tsc --init` gets me a simple `tsconfig.json` I'll probably leave most of this. 
+- I lifted the `prettier` and `eslint` configs from the blog post above. 
+- I'm also happy enough with the scripts provided in the blog for `start` and `dev` so I shamelessly steal those for `apps/be/package.json`.
