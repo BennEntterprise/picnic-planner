@@ -1,5 +1,5 @@
-import type { DailyForecast, HistoricalData } from "./types";
-import { format, parseISO } from "date-fns";
+import type { DailyForecast, HistoricalData } from './types';
+import { format, parseISO } from 'date-fns';
 
 // Default coordinates (can be made configurable)
 const DEFAULT_LATITUDE = 40.7128;
@@ -19,24 +19,24 @@ type HistoricalDataBlob = {
 type HistoricalDataKeys = keyof HistoricalDataBlob;
 
 export async function fetchForecastData(): Promise<DailyForecast[]> {
-  const url = new URL("https://api.open-meteo.com/v1/forecast");
+  const url = new URL('https://api.open-meteo.com/v1/forecast');
 
   // Set query parameters
-  url.searchParams.append("latitude", DEFAULT_LATITUDE.toString());
-  url.searchParams.append("longitude", DEFAULT_LONGITUDE.toString());
-  url.searchParams.append("daily", "temperature_2m_max");
-  url.searchParams.append("daily", "temperature_2m_min");
-  url.searchParams.append("daily", "apparent_temperature_max");
-  url.searchParams.append("daily", "precipitation_sum");
-  url.searchParams.append("daily", "precipitation_hours");
-  url.searchParams.append("daily", "precipitation_probability_max");
-  url.searchParams.append("daily", "windspeed_10m_max");
-  url.searchParams.append("daily", "windgusts_10m_max");
-  url.searchParams.append("daily", "winddirection_10m_dominant");
-  url.searchParams.append("daily", "uv_index_max");
-  url.searchParams.append("daily", "relativehumidity_2m_max");
-  url.searchParams.append("daily", "cloudcover_max");
-  url.searchParams.append("timezone", "auto");
+  url.searchParams.append('latitude', DEFAULT_LATITUDE.toString());
+  url.searchParams.append('longitude', DEFAULT_LONGITUDE.toString());
+  url.searchParams.append('daily', 'temperature_2m_max');
+  url.searchParams.append('daily', 'temperature_2m_min');
+  url.searchParams.append('daily', 'apparent_temperature_max');
+  url.searchParams.append('daily', 'precipitation_sum');
+  url.searchParams.append('daily', 'precipitation_hours');
+  url.searchParams.append('daily', 'precipitation_probability_max');
+  url.searchParams.append('daily', 'windspeed_10m_max');
+  url.searchParams.append('daily', 'windgusts_10m_max');
+  url.searchParams.append('daily', 'winddirection_10m_dominant');
+  url.searchParams.append('daily', 'uv_index_max');
+  url.searchParams.append('daily', 'relativehumidity_2m_max');
+  url.searchParams.append('daily', 'cloudcover_max');
+  url.searchParams.append('timezone', 'auto');
 
   try {
     const response = await fetch(url.toString());
@@ -65,17 +65,17 @@ export async function fetchForecastData(): Promise<DailyForecast[]> {
       cloudcover_max: data.daily.cloudcover_max[index],
     }));
   } catch (error) {
-    console.error("Error fetching forecast data:", error);
+    console.error('Error fetching forecast data:', error);
     throw error;
   }
 }
 
 export async function fetchHistoricalData(
-  date: string
+  date: string,
 ): Promise<HistoricalData> {
   // Extract month and day from the date
   const parsedDate = parseISO(date);
-  const monthDay = format(parsedDate, "MM-dd");
+  const monthDay = format(parsedDate, 'MM-dd');
 
   // We'll fetch data for this date over the past 10 years
   const historicalData: Array<HistoricalDataBlob> = [];
@@ -89,18 +89,18 @@ export async function fetchHistoricalData(
     const startDate = `${year}-${monthDay}`;
     const endDate = startDate; // Same day
 
-    const url = new URL("https://archive-api.open-meteo.com/v1/archive");
-    url.searchParams.append("latitude", DEFAULT_LATITUDE.toString());
-    url.searchParams.append("longitude", DEFAULT_LONGITUDE.toString());
-    url.searchParams.append("start_date", startDate);
-    url.searchParams.append("end_date", endDate);
-    url.searchParams.append("daily", "temperature_2m_max");
-    url.searchParams.append("daily", "temperature_2m_min");
-    url.searchParams.append("daily", "precipitation_sum");
-    url.searchParams.append("daily", "windspeed_10m_max");
-    url.searchParams.append("daily", "relativehumidity_2m_max");
-    url.searchParams.append("daily", "sunshine_duration");
-    url.searchParams.append("timezone", "auto");
+    const url = new URL('https://archive-api.open-meteo.com/v1/archive');
+    url.searchParams.append('latitude', DEFAULT_LATITUDE.toString());
+    url.searchParams.append('longitude', DEFAULT_LONGITUDE.toString());
+    url.searchParams.append('start_date', startDate);
+    url.searchParams.append('end_date', endDate);
+    url.searchParams.append('daily', 'temperature_2m_max');
+    url.searchParams.append('daily', 'temperature_2m_min');
+    url.searchParams.append('daily', 'precipitation_sum');
+    url.searchParams.append('daily', 'windspeed_10m_max');
+    url.searchParams.append('daily', 'relativehumidity_2m_max');
+    url.searchParams.append('daily', 'sunshine_duration');
+    url.searchParams.append('timezone', 'auto');
 
     fetchPromises.push(fetch(url.toString()).then((res) => res.json()));
   }
@@ -126,7 +126,7 @@ export async function fetchHistoricalData(
     // Calculate statistics
     // TODO: Fix the `as casting` here.
     const rainyDays = historicalData.filter(
-      (day) => day.precipitation_sum > 1
+      (day) => day.precipitation_sum > 1,
     ).length;
     const calculateStats = (key: HistoricalDataKeys) => {
       const values = historicalData
@@ -140,22 +140,22 @@ export async function fetchHistoricalData(
         avg:
           (values as number[]).reduce(
             (sum: number, val: number) => sum + val,
-            0
+            0,
           ) / values.length,
       };
     };
 
     return {
-      temperature_2m_max: calculateStats("temperature_2m_max"),
-      temperature_2m_min: calculateStats("temperature_2m_min"),
-      precipitation_sum: calculateStats("precipitation_sum"),
-      windspeed_10m_max: calculateStats("windspeed_10m_max"),
-      relativehumidity_2m_max: calculateStats("relativehumidity_2m_max"),
-      sunshine_duration: calculateStats("sunshine_duration"),
+      temperature_2m_max: calculateStats('temperature_2m_max'),
+      temperature_2m_min: calculateStats('temperature_2m_min'),
+      precipitation_sum: calculateStats('precipitation_sum'),
+      windspeed_10m_max: calculateStats('windspeed_10m_max'),
+      relativehumidity_2m_max: calculateStats('relativehumidity_2m_max'),
+      sunshine_duration: calculateStats('sunshine_duration'),
       rainy_days: rainyDays,
     };
   } catch (error) {
-    console.error("Error fetching historical data:", error);
+    console.error('Error fetching historical data:', error);
     throw error;
   }
 }

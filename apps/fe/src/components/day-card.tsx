@@ -1,8 +1,8 @@
-import { format, parseISO } from "date-fns";
-import { Cloud, CloudRain, Sun, CloudSun } from "lucide-react";
-import { cn } from "@/lib/utils";
-import type { DailyForecast } from "@/lib/types";
-import { getPicnicSuitability } from "@/lib/weather-utils";
+import { format, parseISO } from 'date-fns';
+import { Cloud, CloudRain, Sun, CloudSun } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import type { DailyForecast } from '@/lib/types';
+import { getPicnicSuitability } from '@/lib/weather-utils';
 
 interface DayCardProps {
   date: string;
@@ -18,15 +18,15 @@ export function DayCard({
   onSelect,
 }: DayCardProps) {
   const parsedDate = parseISO(date);
-  const dayName = format(parsedDate, "EEE");
-  const dayDate = format(parsedDate, "MMM d");
-  const isToday = format(new Date(), "yyyy-MM-dd") === date;
+  const dayName = format(parsedDate, 'EEE');
+  const dayDate = format(parsedDate, 'MMM d');
+  const isToday = format(new Date(), 'yyyy-MM-dd') === date;
 
   // Default values if forecast is not available
-  const temp = forecast?.temperature_2m_max ?? "N/A";
+  const temp = forecast?.temperature_2m_max ?? 'N/A';
   const precipitation = forecast?.precipitation_probability_max ?? 0;
 
-  const suitability = forecast ? getPicnicSuitability(forecast) : "unknown";
+  const suitability = forecast ? getPicnicSuitability(forecast) : 'unknown';
 
   // Determine weather icon based on precipitation and temperature
   let WeatherIcon = Sun;
@@ -42,19 +42,19 @@ export function DayCard({
 
   // Color based on picnic suitability
   const cardColors = {
-    good: "bg-green-100 border-green-300 hover:bg-green-200",
-    fair: "bg-yellow-100 border-yellow-300 hover:bg-yellow-200",
-    poor: "bg-red-100 border-red-300 hover:bg-red-200",
-    unknown: "bg-gray-100 border-gray-300 hover:bg-gray-200",
+    good: 'bg-green-100 border-green-300 hover:bg-green-200',
+    fair: 'bg-yellow-100 border-yellow-300 hover:bg-yellow-200',
+    poor: 'bg-red-100 border-red-300 hover:bg-red-200',
+    unknown: 'bg-gray-100 border-gray-300 hover:bg-gray-200',
   };
 
   return (
     <button
       onClick={onSelect}
       className={cn(
-        "flex h-32 flex-col items-center justify-between rounded-lg border p-3 transition-colors",
+        'flex h-32 flex-col items-center justify-between rounded-lg border p-3 transition-colors',
         cardColors[suitability],
-        isSelected && "ring-2 ring-blue-500 ring-offset-2"
+        isSelected && 'ring-2 ring-blue-500 ring-offset-2',
       )}
     >
       <div className="text-sm font-medium">
