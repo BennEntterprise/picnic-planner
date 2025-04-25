@@ -114,8 +114,12 @@ The sections I provided as context are:
 
 I provide specific instructions NOT to attempt to implement the api.  Aside from few UI bugs (big float numbers) I'm fairly happy with what it came out with. 
 
+If you want to inspect that conversation it's [here](https://v0.dev/chat/weather-picnic-planner-qf3uia6Ytoy).
+
 <img src="./docs/images/v0-ui-weather-picnic-planner.gif"/>
 
 v0 utilizes TailwindCSS to style components and so I will be able to copy & paste many of the components over to the frontend. These all rely on a mock-data.ts 
 
-The work I DO need is to integrate [TailwindCSS](https://tailwindcss.com/docs/installation/using-vite) so I've done that and then copied in the UI components I need into my `apps/fe` folder.
+The work I DO need is to integrate [Shadcn](https://ui.shadcn.com/docs/installation/vite) so I've done that and then copied in the UI components I need into my `apps/fe` folder.
+
+I also fixed some linting problems and then introduced a turbo task for `npm run lint` to run the linter in each project. 

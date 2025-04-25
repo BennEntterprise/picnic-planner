@@ -11,6 +11,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "turbo run build",
+    "lint": "turbo run lint",
     "preinstall": "node ./scripts/verify-engines.js",
     "postinstall": "node ./scripts/git/migrate-git-hooks.js",
     "dev": "docker-compose up --build"
