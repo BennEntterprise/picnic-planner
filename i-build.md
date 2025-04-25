@@ -101,4 +101,21 @@ picnic-planner: %  tree -I'node_modules'
 └── turbo.json
 ```
 
-For the first time so far I'm allowing an agent (GTP-4o) access to my codebase rather than prompting then lifting what I like. It gave me something half working for Dockerfiles and Docker but I pulled [this blog post](https://medium.com/@tomas.ew88/recently-i-was-setting-up-docker-to-work-with-a-vite-project-and-also-an-express-server-ab65456e64d5) to actually get both up. 
+For the first time so far I'm allowing an agent (GTP-4o) access to my codebase rather than prompting then lifting what I like. It gave me something half working for Dockerfiles and Docker but I pulled [this blog post](https://medium.com/@tomas.ew88/recently-i-was-setting-up-docker-to-work-with-a-vite-project-and-also-an-express-server-ab65456e64d5) to actually get both up. I also had some weirdness going on with Docker where it wasn't seeing the `cors` of `@types/cors` modules. Needed to nuke docker and clear some caches but it took. 
+
+### A frontend
+
+I'm going to tackle the frontend first. I've used services like [Bolt from Stackblitz](https://bolt.new/) and [v0.dev from Vercel](https://v0.dev/) to scratch one-off musings I have around UIs, I'm not a designer and prefer to get to the backend logic quickly so I'm going to chose [v0.dev from Vercel](https://v0.dev/) for this iteration. I'm shamelessly going to pump a portion of the README into the agent, leaving off the Architecture requirements.
+
+The sections I provided as context are: 
+[Intro](./README.md#️-weather-picnic-planner)
+[Main Features And Requirements > Interactive Two Week Forecast Calendar](./README.md#1-interactive-two-week-forecast-calendar)
+[Main Features And Requirements > Detailed Weather View For Each Day](./README.md#2-detailed-weather-view-for-each-day)
+
+I provide specific instructions NOT to attempt to implement the api.  Aside from few UI bugs (big float numbers) I'm fairly happy with what it came out with. 
+
+<img src="./docs/images/v0-ui-weather-picnic-planner.gif"/>
+
+v0 utilizes TailwindCSS to style components and so I will be able to copy & paste many of the components over to the frontend. These all rely on a mock-data.ts 
+
+The work I DO need is to integrate [TailwindCSS](https://tailwindcss.com/docs/installation/using-vite) so I've done that and then copied in the UI components I need into my `apps/fe` folder.
