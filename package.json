@@ -14,7 +14,9 @@
     "lint": "turbo run lint",
     "preinstall": "node ./scripts/verify-engines.js",
     "postinstall": "node ./scripts/git/migrate-git-hooks.js",
-    "dev": "docker-compose up --build"
+    "dev": "docker-compose up --build",
+    "format": "turbo run format",
+    "format:check": "turbo run format:check"
   },
   "repository": {
     "type": "git",

@@ -9,7 +9,8 @@
     "dev": "vite",
     "lint": "eslint .",
     "start": "vite preview",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@radix-ui/react-tabs": "^1.1.9",
