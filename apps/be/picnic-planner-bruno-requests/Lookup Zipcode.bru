@@ -1,0 +1,17 @@
+meta {
+  name: Lookup Zipcode
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{HOST}}/api/find-lat-long-from-zip
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "zipCode": 15208
+  }
+}

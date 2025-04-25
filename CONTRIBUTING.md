@@ -17,8 +17,7 @@ npm install
 > 
 > We know it might seem like a PITA to move to a different version of node, but we do this to prevent later foot-guns and ensure our local development stack has as much [environment parity](https://12factor.net/dev-prod-parity) we can muster with our CI/CD and deployed environments.
 
-TODO: MVP-Docs: include output of what it looks like on the WRONG version of NODE.
-TODO: MVP-DEVOPS: ensure there is a `pre-install` npm script to validate you are on the correct version of node. 
+<img src="./docs/images/bad-engine-miss-match.png"/>
 
 After you've installed the dependencies you can use start the application by running this from the root of the project.
 
@@ -32,3 +31,15 @@ This will spin up a docker-compose command. If you'd like you can add `-- -d` to
 ## Development workflow
 
 You should make your changes and then commit and push them to your repository. Then you can issue a pull request where you request your code to be brought into the main of the upstream project. Note: We have workflows that must pass for your branch to even be considered, your best change of passing these is to ensure you're utilizing the pre-commit and pre-push hooks locally. 👍
+
+You can always opt to run the code quality checks yourself either from the root of the project (which runs all children) or by changing directories into a given project and running it there. (Or checkout [Turborepo syntax for "Using a Task Identifier"](https://turborepo.com/docs/reference/run#using-a-task-identifier) 🤯)
+
+The available quality checks are:
+
+```
+npm run build
+npm run lint
+npm run format:check
+```
+
+* If you fail an `npm run format:check` you can use `npm run format` to forcibly fix any files that can be auto-fixed
