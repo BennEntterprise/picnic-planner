@@ -56,8 +56,24 @@ I'm going to take a sec here because we've now got a front and backend that can 
 
 The best way to keep track of a project is with something like Trello or Jira, that's overblown for this project so I'm going to use [Todo.md](./TODO.md) at the root of this repo. It is a rankend queue of what I intend to get done in the next steps. Stuff that comes up might not necessarily end up at the top or bottom, it will get inserted where I think it's appropriate. 
 
-#### TurboRepo + Code-Quality Checks
+#### TurboRepo
 
 Now that I have a front and backend I want to ensure that any time I commit I am committing VALID CODE: never break main! Turborepo combined with pre-commit & pre-push hooks will help me with this. Many teams will run these types of checks on a pull request but we chose to do them at the developer level believing that [Shifting Left](https://en.wikipedia.org/wiki/Shift-left_testing) helps full stack developers actually be "full stack" rather than throwing their code over to the devops cycle. In my opinion shifting left helps developers understand what needs to happen before pushing code to production.
 
 So in this commit I added [TurboRepo](https://turborepo.com/docs) which has one task, `build`. This means that at the root of the repo I can set an npm script `build` => `turbo run build` => `npm run build (in each of the apps!)`. This parallelization and some out-of-the-box-caching should stop any whiners who whine "The build steps take so long on each commit". We also can do some more advance caching in the future by declaring our inputs and outputs of the given task to leverage deterministic builds. If we get super mature we can even us [Remote Caching](https://turborepo.com/docs/crafting-your-repository/constructing-ci#enabling-remote-caching) so our team can share their build caches (out of scope for now).
+
+
+### Pre-Install Script
+
+In the CONTIBUTING.md we talk about how a `preinstall` script will verify the right version of node is installed. A quick AI query with a few of my own edits for error checkign gets me something I can live with in [scripts/verify-engines.js](scripts/verify-engines.js). Originally it used some 3rd party packages but since this runs before any sort of install and I want to keep installation simple I have used only core Node modules so that the script should _in theory_ be able to run with whatever system version of Node is installed (even one that's fairly old).
+
+### Code Quality Checks
+
+I have some gists [here](https://gist.github.com/BennEntterprise/b78f617dd3b7701ca08b8038deb0668b) and [here](https://gist.github.com/BennEntterprise/f332c9e2040c77e6eee023c8ba61144f) that I've used in the past to accomplish two goals:
+
+1. Ensure minimial setup with an automated "migrate" script for hooks.
+2. Ensure that git scripts (inside an untracked `.git` folder) have a way to verify they are the "latest" with what the team expects in the codebase.
+
+Point 2 has some potential foot-guns where it might get a bit wonky if you are iterating on the scripts, but in general these things aren't chaning very often so most developer won't need to deal with this wonkiness. I'm not going to worry about that for now though since I'm the only one working on this. For now I've just I piped the migrate script into an agent and asked for an node translation (with some improvements for idempotency) to get [migrate-git-hooks.js](./scripts/migrate-git-hooks.js) since we know node is installed in the system (due to preinstall check above)
+
+The pre-commit & pre-push scripts themselves just call `npm run build`, this ensures that both the client and server can build before checking in code. 

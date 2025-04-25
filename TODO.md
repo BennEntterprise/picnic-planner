@@ -1,9 +1,9 @@
 # TODO List
 
 [x] TurboRepo (npm run build)
-[] Pre Commit Code Quality sHook(s)
+[x] Pre Commit Code Quality sHook(s)
+[] Docker Compose Frontend + Backend
 [] ConfigConsumption (process.env => Zod?)
 [] Fix Linting
-[] Docker Compose Frontend + Backend
 [] AI Gen frontend
 [] Decide how to architect an interchangable/extensible/composable weather API

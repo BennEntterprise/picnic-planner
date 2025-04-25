@@ -4,9 +4,15 @@
   "description": "An app to help plan the perfect date for a picnic",
   "main": "index.js",
   "packageManager": "npm@10.9.2",
+  "engines": {
+    "node": "v20.10.0",
+    "npm": "10.3.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "turbo run build"
+    "build": "turbo run build",
+    "preinstall": "node ./scripts/verify-engines.js",
+    "postinstall": "node ./scripts/git/migrate-git-hooks.js"
   },
   "repository": {
     "type": "git",
