@@ -25,3 +25,10 @@ After you've installed the dependencies you can use start the application by run
 ```
 npm dev
 ```
+
+This will spin up a docker-compose command. If you'd like you can add `-- -d` to run the command _detached_ so that it doesn't have output to the terminal. The frontend will run on localhost:3000 by default and send requests to the backend at localhost:3001
+
+
+## Development workflow
+
+You should make your changes and then commit and push them to your repository. Then you can issue a pull request where you request your code to be brought into the main of the upstream project. Note: We have workflows that must pass for your branch to even be considered, your best change of passing these is to ensure you're utilizing the pre-commit and pre-push hooks locally. 👍

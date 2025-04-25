@@ -77,3 +77,28 @@ I have some gists [here](https://gist.github.com/BennEntterprise/b78f617dd3b7701
 Point 2 has some potential foot-guns where it might get a bit wonky if you are iterating on the scripts, but in general these things aren't chaning very often so most developer won't need to deal with this wonkiness. I'm not going to worry about that for now though since I'm the only one working on this. For now I've just I piped the migrate script into an agent and asked for an node translation (with some improvements for idempotency) to get [migrate-git-hooks.js](./scripts/migrate-git-hooks.js) since we know node is installed in the system (due to preinstall check above)
 
 The pre-commit & pre-push scripts themselves just call `npm run build`, this ensures that both the client and server can build before checking in code. 
+
+### Docker 
+
+My tree looks like this: 
+```
+picnic-planner: %  tree -I'node_modules'
+.
+├── CODEOWNERS
+├── CONTRIBUTING.md
+├── LICENSE
+├── README.md
+├── TODO.md
+├── apps
+│   ├── be
+│   └── fe
+├── i-build.md
+├── package-lock.json
+├── package.json
+├── scripts
+│   ├── git
+│   └── verify-engines.js
+└── turbo.json
+```
+
+For the first time so far I'm allowing an agent (GTP-4o) access to my codebase rather than prompting then lifting what I like. It gave me something half working for Dockerfiles and Docker but I pulled [this blog post](https://medium.com/@tomas.ew88/recently-i-was-setting-up-docker-to-work-with-a-vite-project-and-also-an-express-server-ab65456e64d5) to actually get both up. 

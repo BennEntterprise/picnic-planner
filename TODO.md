@@ -7,3 +7,5 @@
 [] Fix Linting
 [] AI Gen frontend
 [] Decide how to architect an interchangable/extensible/composable weather API
+[] SECURITY: run npm audit before pushing to remote
+[] SECURITY: Inspect docker images for vulns
