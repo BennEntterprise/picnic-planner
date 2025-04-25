@@ -49,3 +49,9 @@ I opt for the [quickstart guide for vite](https://vite.dev/guide/) using the com
 - `npx tsc --init` gets me a simple `tsconfig.json` I'll probably leave most of this. 
 - I lifted the `prettier` and `eslint` configs from the blog post above. 
 - I'm also happy enough with the scripts provided in the blog for `start` and `dev` so I shamelessly steal those for `apps/be/package.json`.
+
+#### My mind is racing with what is left to do!
+
+I'm going to take a sec here because we've now got a front and backend that can run. I haven't even gotten to the meat of the assignment yet, but that's because there's so much foundation that (in my view) _should be done before you get to the meat_. This boilerplat is going to take me a bit longer to get done and I might end up spending more than the 2-4hrs on the project prescribed (I've already spent about 1.5) but as this project is under open source I wnat to ensure this is something I'm proud to demo even after this interview. 
+
+The best way to keep track of a project is with something like Trello or Jira, that's overblown for this project so I'm going to use [Todo.md](./TODO.md) at the root of this repo. It is a rankend queue of what I intend to get done in the next steps. Stuff that comes up might not necessarily end up at the top or bottom, it will get inserted where I think it's appropriate. 
