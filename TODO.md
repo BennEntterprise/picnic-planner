@@ -6,10 +6,12 @@
 [x] Fix Linting & Formatting
 [x] Decide how to architect an inter-changable/extensible/composable weather API (strategy, factory, and proxy)
 [x] Add Unit testing
-[] Implement an WeatherService Interface that any instance should conform to.
-[] Implement a concrete weather service for `openmeteo`
-[] Implement a [factory](https://sbcode.net/typescript/factory/) to build the weather service.
+[x] Implement an WeatherService Interface that any instance should conform to.
+[x] Implement a concrete weather service for `openmeteo`
+[x] Implement a [factory](https://sbcode.net/typescript/factory/) to build the weather service.
+[x] Add an endpoint for zipcode to coordinate conversion
 [] Add Redis to Docker-compose
+[] Implement caching of zipcode => coordinates (long time)
 [] Add user-input field to accept zip codes for custom weather.
 [] Test End To End
 [] Implement [proxy](https://sbcode.net/typescript/proxy/) that calls the factory which builds the correct weather interface

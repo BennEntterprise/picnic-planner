@@ -1,5 +1,10 @@
 import { DailyForecast, MultiDayForecast } from './DailyForecast';
 
+type Coords = {
+  latitude: number;
+  longitude: number;
+};
+
 interface IWeatherService {
   readonly apiUrl: string;
   readonly apiKey?: string;
@@ -34,4 +39,4 @@ interface IWeatherService {
   getHistoricalAlmanac(id: string | number, date: Date): Promise<any>;
 }
 
-export type { IWeatherService };
+export type { Coords, IWeatherService };

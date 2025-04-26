@@ -1,0 +1,17 @@
+meta {
+  name: Convert Zip To Coords
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{HOST}}/api/weather/zip-to-coords
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "zipCode": 15208
+  }
+}

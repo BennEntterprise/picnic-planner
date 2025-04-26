@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import weatherRouter from './routes/weather.router';
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -8,24 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// TODO: Tightend up the types on the request and response objects
-app.post('/api/search-zip', (req: any, res: any) => {
-  try {
-    const { zipCode } = req.body;
-    const response = fetch(
-      `https://geocoding-api.open-meteo.com/v1/search?name=12790&count=10&language=en&format=json`,
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
-    return res.status(200).json(response);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return res.status(500).json({ error: 'Internal server error' });
-  }
-});
+app.use('/api/weather', weatherRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
