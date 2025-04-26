@@ -1,17 +1,22 @@
+import { DailyForecast, MultiDayForecast } from './DailyForecast';
+
 interface IWeatherService {
+  readonly apiUrl: string;
+  readonly apiKey?: string;
+
   /**
    *
    * @param zipCode - The zip code to look up.
    * @returns A promise that resolves to the weather api's understanding of how to query a certain location.
    */
-  lookupZipCode(zipCode: string): Promise<any>;
+  getLatLongFromZip(zipCode: string): Promise<any>;
 
   /**
    *
    * @param id - The location id to look up.
    * @returns A single day forecast for the location.
    */
-  getSingleDayForecast(id: string | number): Promise<any>;
+  getSingleDayForecast(id: string | number): Promise<DailyForecast>;
 
   /**
    *
@@ -19,11 +24,14 @@ interface IWeatherService {
    * @param days - The number of days to forecast.
    * @returns A multi-day forecast for the location.
    */
-  getNDayForecast(id: string | number, days: number): Promise<any>;
-}
+  getNDayForecast(id: string | number, days: number): Promise<MultiDayForecast>;
 
-type DailyForecast = {
-  // TODO: Can this come from the frontend?
-};
+  /**
+   *
+   * @param id - The location id to look up.
+   * @returns A list of locations that match the given id.
+   */
+  getHistoricalAlmanac(id: string | number, date: Date): Promise<any>;
+}
 
 export type { IWeatherService };
