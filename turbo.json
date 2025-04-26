@@ -26,6 +26,14 @@
             "dependsOn": [
                 "^format:check"
             ]
+        },
+        "test": {
+            "dependsOn": [
+                "^test"
+            ],
+            "outputs": [
+                "coverage/**"
+            ]
         }
     }
 }

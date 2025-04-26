@@ -1,5 +1,6 @@
 #!/bin/bash
 
-npm run build
 npm run lint
 npm run format:check
+npm run build
+npm run test

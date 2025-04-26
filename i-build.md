@@ -152,3 +152,8 @@ But first, I want to set up _one final code quality_ check.
 
 #### Testing
 
+For the backend I'm a fan of [ts-jest](https://www.npmjs.com/package/ts-jest) it allows tests to be written in typescript and largely piggy backs off the `tsconfig.json`. For the frontend I used [vitest](https://vitest.dev/guide/) as it's already got a vite build system. For both apps I created a `utils` folder and put a sample test for a sum function.
+
+I added Turbo task for `test` and hooked that up to `npm run test`. I added that to the pre-commit and pre-push scripts as well.
+
+The final bit of testing we'd want to include is some sort of integration and/or end-to-end tests. I've personally found that everyone has their own interpretation of what constitutes "integration" but for me it largely means running unit tests WITHOUT mocks thereby testing the integration of multiple classes so in theory we can grow into that. For end-to-end testing I've dabbled with [Cypress.io](https://www.cypress.io/) but I won't be implementing that here. 
