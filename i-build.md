@@ -157,3 +157,19 @@ For the backend I'm a fan of [ts-jest](https://www.npmjs.com/package/ts-jest) it
 I added Turbo task for `test` and hooked that up to `npm run test`. I added that to the pre-commit and pre-push scripts as well.
 
 The final bit of testing we'd want to include is some sort of integration and/or end-to-end tests. I've personally found that everyone has their own interpretation of what constitutes "integration" but for me it largely means running unit tests WITHOUT mocks thereby testing the integration of multiple classes so in theory we can grow into that. For end-to-end testing I've dabbled with [Cypress.io](https://www.cypress.io/) but I won't be implementing that here. 
+
+#### Weather Service Classes
+
+##### Factory
+
+Now the nitty gritty! I'm going to declare a Interface that a weather service should implement. This will have generic terms like `getOneDayForecast` and `getHistoricalData`, Then _any_ weather service (even the OpenMeteo) will implement this interface. Anywhere we depend on a weather service we should depend on that interface and not a concrete class.
+
+To aid with further decoupling we need to ensure that it isn't a 100% given that every time we need our class, we new-it-up with a concrete instance this would defeat any work we did on decoupling. So instead we use a [Factory](https://sbcode.net/typescript/factory) structure. This allows us to grab the concrete instance of an open meteo service at runtime.
+
+You can check out these structures at 
+- [IWeatherService.ts](./apps/be/src/types/IWeatherService.ts) - The interface current (and possible future) weather services would need to implement.
+- [OpenMeteoWeatherService](./apps/be/src/services/OpenMeteoWeatherService.ts) - A concrete instance of IWeatherService that implements IWeatherService
+- [WeatherServiceFactory.ts](./apps/be/src/services/WeatherServiceFactory.ts) - A Creator of objects that implement IWeatherService.
+ 
+##### Proxy
+
