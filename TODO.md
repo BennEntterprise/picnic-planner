@@ -4,9 +4,10 @@
 [x] Pre Commit Code Quality sHook(s)
 [x] Docker Compose Frontend + Backend
 [x] Fix Linting & Formatting
-[] Decide how to architect an inter-changable/extensible/composable weather API
+[x] Decide how to architect an inter-changable/extensible/composable weather API (strategy, factory, and proxy)
 [] Add Unit testing
 [] Use a utility to get typed request/responses.
+[] Shared Types in a 3rd package?
 
 
 Decided to Definitely Deferred

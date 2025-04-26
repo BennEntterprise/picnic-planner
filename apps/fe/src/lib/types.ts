@@ -1,3 +1,4 @@
+// TODO: Can these move to a shared location?
 export interface DailyForecast {
   date: string;
   temperature_2m_max: number;

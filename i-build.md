@@ -123,3 +123,32 @@ v0 utilizes TailwindCSS to style components and so I will be able to copy & past
 The work I DO need is to integrate [Shadcn](https://ui.shadcn.com/docs/installation/vite) so I've done that and then copied in the UI components I need into my `apps/fe` folder.
 
 I also fixed some linting problems and then introduced a turbo task for `npm run lint` to run the linter in each project. 
+
+### The backend
+
+Slow is smooth and smooth is fast.
+
+Phew, okay we got through a bunch of the stuff that some people might say is overblown but it's something I feel is important when you want to set good roots for an organization. I've worked in places where developer churn and fatigue was greatly attributed to a messy codebase without any sort of standards. 
+
+- Diffs were large because re-formatting touched code that was irrelevant
+- Differences in local environments cause "it works on my machine" headaches
+- Different styles made the company feel immature.
+W
+
+We've fixed all of that an now it's time to get into some Architecture.
+
+#### Patterns
+
+I am going to use a few patterns. 
+
+First I'll assume that the client is going to call my api with a unique key to determine which Weather Service we will utilize. We will use a [Strategy Pattern](https://sbcode.net/typescript/strategy/) to determine which class to instantiate and in the process will also return a [Factory](https://sbcode.net/typescript/factory/).
+
+To begin with our factor will only know how to create a concrete class for [open-meteo](https://open-meteo.com/) (likely using the [openmeteo javascript/typescript library](https://www.npmjs.com/package/openmeteo)), but as time goes on we could allow this factory to create more concrete instances that all implement the same interface. 
+
+Similarly the Strategy pattern will only invoke one instance of the factory, but it too is open for extension later.
+
+But first, I want to set up _one final code quality_ check.
+
+
+#### Testing
+
