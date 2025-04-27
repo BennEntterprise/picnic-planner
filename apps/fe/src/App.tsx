@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { WeatherProvider } from './components/weather-provider';
 import { WeatherCalendar } from './components/weather-calendar';
+import { ZipCodeForm } from './components/zip-code-form';
 
 function App() {
   const [message, setMessage] = useState('');
@@ -21,8 +22,9 @@ function App() {
               Weather Picnic Planner
             </h1>
             <p className="text-lg text-slate-600">
-              Find the perfect day for your outdoor adventure
+              Find the perfect day for your outdoor adventures!
             </p>
+            <ZipCodeForm />
           </header>
 
           <WeatherProvider>
