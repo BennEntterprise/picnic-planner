@@ -2,13 +2,15 @@ import { DailyForecast, MultiDayForecast } from '../types/DailyForecast';
 import { IWeatherService } from '../types/IWeatherService';
 import { Coords } from '../types/IWeatherService';
 
+const openMeteoWeatherServiceAPIUrl = 'https://api.open-meteo.com/v1/forecast';
+const openMeteoWeatherServiceAPIKey =
+  process.env.OPEN_METEO_API_KEY || 'DEMOAPIKEY';
+
 class OpenMeteoWeatherService implements IWeatherService {
-  apiKey?: string | undefined;
-  apiUrl: string = 'https://api.open-meteo.com/v1/forecast';
+  apiKey: string = openMeteoWeatherServiceAPIKey;
+  apiUrl: string = openMeteoWeatherServiceAPIUrl;
 
   constructor() {
-    this.apiKey = process.env.OPEN_METEO_API_KEY || undefined;
-
     if (!this.apiKey) {
       console.warn(
         'No Open Meteo API key provided. Some features may not work as expected, especially if you hit rate limits.',
@@ -17,20 +19,24 @@ class OpenMeteoWeatherService implements IWeatherService {
   }
 
   async getLatLongFromZip(zipCode: string): Promise<Coords> {
-    const zipCodesAPIKey = process.env.ZIP_CODES_API_KEY || 'DEMOAPIKEY';
-    // TODO: This is tightly coupled, probably should be a separate service
-    const url = `https://api.zip-codes.com/ZipCodesAPI.svc/1.0/GetZipCodeDetails/${zipCode}?key=${zipCodesAPIKey}`;
-    const data = await fetch(url).then((res) => {
-      console.info(res);
-      return res.json();
-    });
-    if (!data?.item?.Latitude || !data?.item?.Longitude) {
-      console.error('Error fetching data:', data);
+    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${zipCode}&count=1&language=en&format=json`;
+    // HACK/DEBT: Rather than searching all results we take the first (if it exists)
+    const fullGeoData = await fetch(url)
+      .then((res) => res.json())
+      .then((data) => data?.results[0] || {})
+      .catch((e) => {
+        throw new Error(
+          `There was an error translating the location, ${zipCode} to coordinates`,
+        );
+      });
+
+    if (!fullGeoData?.latitude || !fullGeoData?.longitude) {
       throw new Error('Coordinates not found');
     }
+
     const coords: Coords = {
-      latitude: data.item.Latitude,
-      longitude: data.item.Longitude,
+      latitude: fullGeoData.latitude,
+      longitude: fullGeoData.longitude,
     };
     return coords;
   }

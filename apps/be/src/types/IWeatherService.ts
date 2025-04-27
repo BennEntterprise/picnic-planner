@@ -6,7 +6,7 @@ type Coords = {
 };
 
 interface IWeatherService {
-  readonly apiUrl: string;
+  readonly apiUrl?: string;
   readonly apiKey?: string;
 
   /**
@@ -14,7 +14,7 @@ interface IWeatherService {
    * @param zipCode - The zip code to look up.
    * @returns A promise that resolves to the weather api's understanding of how to query a certain location.
    */
-  getLatLongFromZip(zipCode: string): Promise<any>;
+  getLatLongFromZip(zipCode: string): Promise<Coords>;
 
   /**
    *

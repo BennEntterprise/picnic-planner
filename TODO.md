@@ -10,11 +10,11 @@
 [x] Implement a concrete weather service for `openmeteo`
 [x] Implement a [factory](https://sbcode.net/typescript/factory/) to build the weather service.
 [x] Add an endpoint for zipcode to coordinate conversion
-[] Add Redis to Docker-compose
-[] Implement caching of zipcode => coordinates (long time)
+[x] Add Redis to Docker-compose
+[x] Implement caching of zipcode => coordinates (long time)
+[x] Implement [proxy](https://sbcode.net/typescript/proxy/) that calls the factory which builds the correct weather interface
 [] Add user-input field to accept zip codes for custom weather.
-[] Test End To End
-[] Implement [proxy](https://sbcode.net/typescript/proxy/) that calls the factory which builds the correct weather interface
+[] Test End To End on zip code entry, ensure there is UI feedback for bad entry.
 [] Use a utility to get typed request/responses?
 [] Shared Types in a 3rd package?
 

@@ -1,27 +1,64 @@
-// import { createClient } from 'redis';
-// import { IWeatherService } from '../types/IWeatherService';
+import { createClient } from 'redis';
+import { Coords, IWeatherService } from '../types/IWeatherService';
+import { DailyForecast, MultiDayForecast } from '../types/DailyForecast';
 
-// class WeatherServiceProxy implements CoordinateService {
-//   private realService: IWeatherServiceeatherService;
-//   private cache: ReturnType<typeof createClient>;
+const REDIS_HOST = process.env.REDIS_HOST || 'localhost';
+const REDIS_PORT = Number(process.env.REDIS_PORT) || 6379;
+class WeatherServiceProxy implements IWeatherService {
+  apiUrl?: string;
+  apiKey?: string;
+  private realService;
+  private cache: ReturnType<typeof createClient>;
 
-//   constructor() {
-//     this.realService = new RealCoordinateService();
-//     this.cache = createClient();
-//     this.cache.connect().catch(console.error);
-//   }
+  constructor(realService: IWeatherService) {
+    this.realService = realService;
+    this.cache = createClient({
+      socket: {
+        host: REDIS_HOST,
+        port: REDIS_PORT,
+      },
+    });
+    this.cache
+      .connect()
+      // .then((d) => console.log(d))
+      .catch(console.error);
+  }
+  getSingleDayForecast(id: string | number): Promise<DailyForecast> {
+    throw new Error('Method not implemented.');
+  }
+  getNDayForecast(
+    id: string | number,
+    days: number,
+  ): Promise<MultiDayForecast> {
+    throw new Error('Method not implemented.');
+  }
+  getHistoricalAlmanac(id: string | number, date: Date): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
 
-//   async getCoordinates(zipcode: string): Promise<[number, number]> {
-//     // Check cache first
-//     const cachedResult = await this.cache.get(zipcode);
-//     if (cachedResult) {
-//       return JSON.parse(cachedResult) as [number, number];
-//     }
+  async getLatLongFromZip(zipCode: string): Promise<Coords> {
+    // Check cache first
+    console.info('Checking cache for zip code:', zipCode);
+    const cachedResult = await this.cache.get(`${zipCode}`);
+    if (cachedResult) {
+      console.info('Cache hit for zip code:', zipCode);
+      const coords = JSON.parse(cachedResult) as Coords;
+      return { ...coords, cached: true } as Coords;
+    } else {
+      console.info('Cache miss for zip code:', zipCode);
+    }
 
-//     // Call the real service if not in cache
-//     const result = await this.realService.getCoordinates(zipcode);
-//     // Store result in cache
-//     await this.cache.set(zipcode, JSON.stringify(result));
-//     return result;
-//   }
-// }
+    // Call the real service if not in cache
+    const result = await this.realService.getLatLongFromZip(zipCode);
+
+    // Store result in cache
+    console.info('Storing result in cache for zip code:', zipCode);
+    await this.cache.set(`${zipCode}`, JSON.stringify(result), {
+      EX: 60 * 60 * 24 * 635, // 1 Year (Postal Codes -> Coords isn't very dynamic)
+      NX: true, // Only set if not already set,
+    });
+    return result;
+  }
+}
+
+export default WeatherServiceProxy;
