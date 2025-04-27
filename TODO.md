@@ -15,8 +15,6 @@
 [x] Implement [proxy](https://sbcode.net/typescript/proxy/) that calls the factory which builds the correct weather interface
 [] Add user-input field to accept zip codes for custom weather.
 [] Test End To End on zip code entry, ensure there is UI feedback for bad entry.
-[] Use a utility to get typed request/responses?
-[] Shared Types in a 3rd package?
 
 
 Decided to Definitely Deferred
@@ -24,3 +22,5 @@ Decided to Definitely Deferred
 [] SECURITY: run npm audit before pushing to remote
 [] SECURITY: Inspect docker images for vulns
 [] AI Gen frontend for user preferences on choosing poor, fair, good conditions?
+[] Use a utility to get typed request/responses?
+[] Shared Types in a 3rd package? 
