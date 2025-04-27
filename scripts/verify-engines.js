@@ -13,7 +13,7 @@ const rootDir = process.cwd();
 
 // Check if the script is being executed from the project root
 // We use "turbo.json" as a marker file to identify the project root, 
-// becaue subprojects may ALSO have a package.json file.
+// because sub-projects may ALSO have a package.json file.
 if (!fs.existsSync(path.join(rootDir, 'turbo.json'))) {
     console.error('This script should be run from the project root directory.');
     process.exit(1);
@@ -26,12 +26,19 @@ function parseVersion(version) {
 function versionSatisfies(current, required) {
     const currentParts = parseVersion(current.replace(/^v/, ''));
     const requiredParts = parseVersion(required.replace(/^[^0-9]*/, ''));
+    let allPartsMatch = true;
 
     for (let i = 0; i < requiredParts.length; i++) {
-        if (currentParts[i] > requiredParts[i]) return true;
-        if (currentParts[i] < requiredParts[i]) return false;
+        if (currentParts[i] === requiredParts[i]){
+            // If the current version part is equal to the required part, continue checking
+            continue;
+        } else {
+            // IF the parts aren't an exact match, set the flag and exit the looping
+            allPartsMatch = false;
+            break;
+        }
     }
-    return true;
+    return allPartsMatch
 }
 
 function checkVersions() {
@@ -46,7 +53,7 @@ function checkVersions() {
     console.log(`Required npm version: ${requiredNpmVersion}`);
 
     if (!requiredNodeVersion && !requiredNpmVersion) {
-        const message = 'HEY AUTHORS! No specific Node.js or npm version specificed in package.json, what happened???'
+        const message = 'HEY AUTHORS! No specific Node.js or npm version specified in package.json, what happened???'
         console.error(`❌ Error: ${message}`);
         throw new Error(message);
     }
@@ -58,8 +65,11 @@ function checkVersions() {
     console.log(`Current npm version: ${currentNpmVersion}`);
 
     // Check Node.js version
-    if (requiredNodeVersion && !versionSatisfies(currentNodeVersion, requiredNodeVersion)
-        || requiredNpmVersion && !versionSatisfies(currentNpmVersion, requiredNpmVersion)) {
+    if (requiredNodeVersion && !versionSatisfies(currentNodeVersion, requiredNodeVersion)) {
+        console.error(`❌ Error: Node.js version ${currentNodeVersion} does not satisfy the required version ${requiredNodeVersion}. Check out [Nvm](https://github.com/nvm-sh/nvm) or [N](https://github.com/tj/n) to manage multiple versions of node.`);
+        process.exit(1);
+    }
+    if (requiredNpmVersion && !versionSatisfies(currentNpmVersion, requiredNpmVersion)){
         console.error(`❌ Error: Node.js version ${currentNodeVersion} does not satisfy the required version ${requiredNodeVersion}. Check out [Nvm](https://github.com/nvm-sh/nvm) or [N](https://github.com/tj/n) to manage multiple versions of node.`);
         process.exit(1);
     }
