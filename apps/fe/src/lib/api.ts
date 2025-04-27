@@ -1,4 +1,4 @@
-import type { DailyForecast, HistoricalData } from './types';
+import type { DailyForecastList, HistoricalData } from './types';
 import { format, parseISO } from 'date-fns';
 
 // Default coordinates (can be made configurable)
@@ -18,7 +18,7 @@ type HistoricalDataBlob = {
 // A type that represents the union of all historical data blob keys
 type HistoricalDataKeys = keyof HistoricalDataBlob;
 
-export async function fetchForecastData(): Promise<DailyForecast[]> {
+export async function fetchForecastData(): Promise<DailyForecastList> {
   const url = new URL('https://api.open-meteo.com/v1/forecast');
 
   // Set query parameters

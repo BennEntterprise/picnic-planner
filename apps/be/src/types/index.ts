@@ -1,6 +1,6 @@
 // TODO: Can these move to a shared location?
-// ALSO IN BACKEND, keep in sync until we have shared types
-export interface DailyForecast {
+// ALSO IN FRONTEND, keep in sync until we have shared types
+export type DailyForecast = {
   date: string;
   temperature_2m_max: number;
   temperature_2m_min: number;
@@ -14,7 +14,7 @@ export interface DailyForecast {
   uv_index_max: number;
   relativehumidity_2m_max: number;
   cloudcover_max: number;
-}
+};
 
 export type DailyForecastList = DailyForecast[];
 
@@ -36,13 +36,4 @@ export interface HistoricalData {
 
 export type HistoricalDataMap = Record<string, HistoricalData>;
 
-export interface WeatherContextType {
-  forecastData: DailyForecast[];
-  historicalData: Record<string, HistoricalData>;
-  selectedDate: string | null;
-  setSelectedDate: (date: string) => void;
-  isLoading: boolean;
-  error: string | null;
-  loadHistoricalDataForDate: (date: string) => Promise<void>;
-  dates: string[];
-}
+export type {};

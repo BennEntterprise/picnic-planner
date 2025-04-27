@@ -1,4 +1,4 @@
-import { DailyForecast, MultiDayForecast } from '../types/DailyForecast';
+import { DailyForecast, DailyForecastList } from '../types';
 import { IWeatherService } from '../types/IWeatherService';
 import { Coords } from '../types/IWeatherService';
 import { fetchWeatherApi } from 'openmeteo';

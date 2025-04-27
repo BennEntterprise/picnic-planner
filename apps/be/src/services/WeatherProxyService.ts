@@ -1,6 +1,6 @@
 import { createClient } from 'redis';
 import { Coords, IWeatherService } from '../types/IWeatherService';
-import { DailyForecast, MultiDayForecast } from '../types/DailyForecast';
+import { DailyForecast, DailyForecastList } from '../types/index';
 
 const REDIS_HOST = process.env.REDIS_HOST || 'localhost';
 const REDIS_PORT = Number(process.env.REDIS_PORT) || 6379;

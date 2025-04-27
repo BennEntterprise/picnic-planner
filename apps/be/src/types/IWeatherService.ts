@@ -1,4 +1,4 @@
-import { DailyForecast, MultiDayForecast } from './DailyForecast';
+import { DailyForecast, DailyForecastList } from './index';
 
 type Coords = {
   latitude: number;
