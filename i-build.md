@@ -173,3 +173,16 @@ You can check out these structures at
  
 ##### Proxy
 
+The proxy pattern was used as a way to sit on the wire and intercept incoming calls to the service. The proxy implements the SAME interface as it's target (the real service) but we have the ability to:
+
+1. Check the redis cache _before_ making a call to the service, and if needed abort the call utilizing the value in the cache.
+2. Set values in the redis cache _after_ making a call to the service. 
+
+On the topic of caching, I intend to use the cache in two ways.
+
+The first is to store zipcode -> Coodinates (lat & long). This will have a very long expiration date as (baring any political reorganizations) zipcode -> coordinate should be a fairly static experience. If I was implementing a full database later, we could store those values in there. 
+
+The second will be a map of the date to it's forecast. I feel confident caching this for about 15 minutes as that's the resolution touted by the API. We are also doing server side caching here so it's important to note
+that we are saving bandwidth from our server to the weather api, not necessarily for the client to us. 
+
+Since we made the assumption that users were on a desktop I didn't concern myself with any client-side caching. If we were to enforce better efficiencies for mobile users a client side cache would ensure that when they reload the page, we can use something from LocalStorage or even on device SQLite and save bandwidth. 
