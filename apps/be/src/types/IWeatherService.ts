@@ -21,22 +21,7 @@ interface IWeatherService {
    * @param id - The location id to look up.
    * @returns A single day forecast for the location.
    */
-  getSingleDayForecast(id: string | number): Promise<DailyForecast>;
-
-  /**
-   *
-   * @param id - The location id to look up.
-   * @param days - The number of days to forecast.
-   * @returns A multi-day forecast for the location.
-   */
-  getNDayForecast(id: string | number, days: number): Promise<MultiDayForecast>;
-
-  /**
-   *
-   * @param id - The location id to look up.
-   * @returns A list of locations that match the given id.
-   */
-  getHistoricalAlmanac(id: string | number, date: Date): Promise<any>;
+  getForecast(id: string | number): Promise<any>;
 }
 
 export type { Coords, IWeatherService };

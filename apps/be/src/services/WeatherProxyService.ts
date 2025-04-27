@@ -23,17 +23,9 @@ class WeatherServiceProxy implements IWeatherService {
       // .then((d) => console.log(d))
       .catch(console.error);
   }
-  getSingleDayForecast(id: string | number): Promise<DailyForecast> {
-    throw new Error('Method not implemented.');
-  }
-  getNDayForecast(
-    id: string | number,
-    days: number,
-  ): Promise<MultiDayForecast> {
-    throw new Error('Method not implemented.');
-  }
-  getHistoricalAlmanac(id: string | number, date: Date): Promise<any> {
-    throw new Error('Method not implemented.');
+
+  async getForecast(id: string | number): Promise<any> {
+    return this.realService.getForecast(id);
   }
 
   async getLatLongFromZip(zipCode: string): Promise<Coords> {
