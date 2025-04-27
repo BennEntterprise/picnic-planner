@@ -37,7 +37,7 @@ export interface HistoricalData {
 export type HistoricalDataMap = Record<string, HistoricalData>;
 
 export interface WeatherContextType {
-  forecastData: DailyForecast[];
+  forecastData: DailyForecastList;
   historicalData: Record<string, HistoricalData>;
   selectedDate: string | null;
   setSelectedDate: (date: string) => void;

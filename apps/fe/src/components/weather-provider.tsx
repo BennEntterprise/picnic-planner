@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react';
 import { formatDate, getDatesForNextTwoWeeks } from '@/lib/date-utils';
 import { mockForecastData, mockHistoricalData } from '@/lib/mock-data';
 import type {
@@ -6,11 +12,26 @@ import type {
   HistoricalData,
   WeatherContextType,
 } from '@/lib/types';
+import { fetchForecastData } from '@/lib/api';
 
 const WeatherContext = createContext<WeatherContextType | undefined>(undefined);
 
 export function WeatherProvider({ children }: { children: ReactNode }) {
   const [forecastData] = useState<DailyForecastList>(mockForecastData);
+  // const [forecastData, setForecastData] = useState<DailyForecastList>([]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const data = await fetchForecastData().then((data) => {
+  //         return data;
+  //       });
+  //       setForecastData(mockForecastData);
+  //     } catch (error) {
+  //       console.error('Error fetching forecast data:', error);
+  //     }
+  //   }
+  //   fetchData();
+  // });
   const [historicalData] =
     useState<Record<string, HistoricalData>>(mockHistoricalData);
   const [selectedDate, setSelectedDate] = useState<string | null>(

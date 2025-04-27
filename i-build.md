@@ -186,3 +186,11 @@ The second will be a map of the date to it's forecast. I feel confident caching 
 that we are saving bandwidth from our server to the weather api, not necessarily for the client to us. 
 
 Since we made the assumption that users were on a desktop I didn't concern myself with any client-side caching. If we were to enforce better efficiencies for mobile users a client side cache would ensure that when they reload the page, we can use something from LocalStorage or even on device SQLite and save bandwidth. 
+
+#### Side-Quest: Shared Library
+
+Any fullstack javascript developer will tout that one of the benefits is that interfaces between the front and backend can be shared. I've long been eyeballing [Verdaccio](https://verdaccio.org/docs/what-is-verdaccio/), an npm registry that can run in a docker container. My hope was that I could create a shared-code project in `apps/` and then _both_ the frontend and backend could depend on this library through the mechanism of installing it from Verdaccio. This would reduce copy/paste for types between the frontend and backend (notably: `DailyForecast`, `DailyForecastList`, `HistoricalData` and `HistoricalDataMap`). 
+
+Alas, weekend wasn't the weekend where I figured out how to setup that process locally. I COULD setup a process where I manually push the shared lib code to this local registry but I really wanted a turnkey method... If the registry wasn't up, or you didn't login, or you didn't push code to the registry, then the consumer apps (`fe` and `be` ) would have resorted to the the actual NPM registry at npmjs.org and I didn't want that.
+
+So I sit defeated (for now) and will just grin and bear the copying and pasting of shared types/utils between the different domains.

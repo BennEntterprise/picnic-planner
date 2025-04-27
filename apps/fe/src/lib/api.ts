@@ -19,51 +19,60 @@ type HistoricalDataBlob = {
 type HistoricalDataKeys = keyof HistoricalDataBlob;
 
 export async function fetchForecastData(): Promise<DailyForecastList> {
-  const url = new URL('https://api.open-meteo.com/v1/forecast');
+  const url = `${process.env.VITE_API_URL}/api/weather/forecast`;
+  // const url = new URL('https://api.open-meteo.com/v1/forecast');
 
-  // Set query parameters
-  url.searchParams.append('latitude', DEFAULT_LATITUDE.toString());
-  url.searchParams.append('longitude', DEFAULT_LONGITUDE.toString());
-  url.searchParams.append('daily', 'temperature_2m_max');
-  url.searchParams.append('daily', 'temperature_2m_min');
-  url.searchParams.append('daily', 'apparent_temperature_max');
-  url.searchParams.append('daily', 'precipitation_sum');
-  url.searchParams.append('daily', 'precipitation_hours');
-  url.searchParams.append('daily', 'precipitation_probability_max');
-  url.searchParams.append('daily', 'windspeed_10m_max');
-  url.searchParams.append('daily', 'windgusts_10m_max');
-  url.searchParams.append('daily', 'winddirection_10m_dominant');
-  url.searchParams.append('daily', 'uv_index_max');
-  url.searchParams.append('daily', 'relativehumidity_2m_max');
-  url.searchParams.append('daily', 'cloudcover_max');
-  url.searchParams.append('timezone', 'auto');
+  // // Set query parameters
+  // url.searchParams.append('latitude', DEFAULT_LATITUDE.toString());
+  // url.searchParams.append('longitude', DEFAULT_LONGITUDE.toString());
+  // url.searchParams.append('daily', 'temperature_2m_max');
+  // url.searchParams.append('daily', 'temperature_2m_min');
+  // url.searchParams.append('daily', 'apparent_temperature_max');
+  // url.searchParams.append('daily', 'precipitation_sum');
+  // url.searchParams.append('daily', 'precipitation_hours');
+  // url.searchParams.append('daily', 'precipitation_probability_max');
+  // url.searchParams.append('daily', 'windspeed_10m_max');
+  // url.searchParams.append('daily', 'windgusts_10m_max');
+  // url.searchParams.append('daily', 'winddirection_10m_dominant');
+  // url.searchParams.append('daily', 'uv_index_max');
+  // url.searchParams.append('daily', 'relativehumidity_2m_max');
+  // url.searchParams.append('daily', 'cloudcover_max');
+  // url.searchParams.append('timezone', 'auto');
 
   try {
-    const response = await fetch(url.toString());
+    console.info('Fetching forecast data from:', url);
+    const response = await fetch(url);
 
+    console.info('Response:', response);
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`);
     }
 
     const data = await response.json();
 
+    // console.info('Data:', data);
+    // return data;
     // Transform the API response into our DailyForecast format
-    return data.daily.time.map((date: string, index: number) => ({
-      date,
-      temperature_2m_max: data.daily.temperature_2m_max[index],
-      temperature_2m_min: data.daily.temperature_2m_min[index],
-      apparent_temperature_max: data.daily.apparent_temperature_max[index],
-      precipitation_sum: data.daily.precipitation_sum[index],
-      precipitation_hours: data.daily.precipitation_hours[index],
-      precipitation_probability_max:
-        data.daily.precipitation_probability_max[index],
-      windspeed_10m_max: data.daily.windspeed_10m_max[index],
-      windgusts_10m_max: data.daily.windgusts_10m_max[index],
-      winddirection_10m_dominant: data.daily.winddirection_10m_dominant[index],
-      uv_index_max: data.daily.uv_index_max[index],
-      relativehumidity_2m_max: data.daily.relativehumidity_2m_max[index],
-      cloudcover_max: data.daily.cloudcover_max[index],
-    }));
+    const d: DailyForecastList = data.daily.time.map(
+      (date: string, index: number) => ({
+        date,
+        temperature_2m_max: data.daily.temperature_2m_max[index],
+        temperature_2m_min: data.daily.temperature_2m_min[index],
+        apparent_temperature_max: data.daily.apparent_temperature_max[index],
+        precipitation_sum: data.daily.precipitation_sum[index],
+        precipitation_hours: data.daily.precipitation_hours[index],
+        precipitation_probability_max:
+          data.daily.precipitation_probability_max[index],
+        windspeed_10m_max: data.daily.windspeed_10m_max[index],
+        windgusts_10m_max: data.daily.windgusts_10m_max[index],
+        winddirection_10m_dominant:
+          data.daily.winddirection_10m_dominant[index],
+        uv_index_max: data.daily.uv_index_max[index],
+        relativehumidity_2m_max: data.daily.relativehumidity_2m_max[index],
+        cloudcover_max: data.daily.cloudcover_max[index],
+      }),
+    );
+    return d;
   } catch (error) {
     console.error('Error fetching forecast data:', error);
     throw error;

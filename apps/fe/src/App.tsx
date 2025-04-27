@@ -2,14 +2,22 @@ import { useEffect, useState } from 'react';
 import { WeatherProvider } from './components/weather-provider';
 import { WeatherCalendar } from './components/weather-calendar';
 import { ZipCodeForm } from './components/zip-code-form';
+import { fetchForecastData } from './lib/api';
 
 function App() {
   const [message, setMessage] = useState('');
-
+  const [payload, setPayload] = useState({});
   useEffect(() => {
     fetch(`${process.env.VITE_API_URL}/api/test`)
       .then((response) => response.json())
       .then((data) => setMessage(data.message))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
+  useEffect(() => {
+    console.info('Calling the fetchForecastData...');
+    fetchForecastData()
+      .then((data) => setPayload(data))
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
@@ -31,6 +39,7 @@ function App() {
             <WeatherCalendar />
           </WeatherProvider>
           <h1>{message}</h1>
+          <pre>{JSON.stringify(payload, null, 2)}</pre>
         </div>
       </main>
     </div>

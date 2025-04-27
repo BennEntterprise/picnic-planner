@@ -49,7 +49,7 @@ export function WeatherCalendar() {
         ) : (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7">
             {dates.map((date) => {
-              const forecast = forecastData.find((d) => d.date === date);
+              const forecast = forecastData?.find((d) => d.date === date);
               return (
                 <DayCard
                   key={date}
