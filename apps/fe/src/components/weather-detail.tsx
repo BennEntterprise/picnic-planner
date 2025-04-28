@@ -87,19 +87,19 @@ export function WeatherDetail({ date }: WeatherDetailProps) {
                   <div className="flex justify-between">
                     <span>Max:</span>
                     <span className="font-medium">
-                      {forecast.temperature_2m_max}°C
+                      {forecast.temperature_2m_max.toFixed(1)}°C
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Min:</span>
                     <span className="font-medium">
-                      {forecast.temperature_2m_min}°C
+                      {forecast.temperature_2m_min.toFixed(1)}°C
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Feels like max:</span>
                     <span className="font-medium">
-                      {forecast.apparent_temperature_max}°C
+                      {forecast.apparent_temperature_max.toFixed(1)}°C
                     </span>
                   </div>
                 </div>
@@ -113,19 +113,19 @@ export function WeatherDetail({ date }: WeatherDetailProps) {
                   <div className="flex justify-between">
                     <span>Probability:</span>
                     <span className="font-medium">
-                      {forecast.precipitation_probability_max}%
+                      {forecast.precipitation_probability_max.toFixed(1)}%
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Amount:</span>
                     <span className="font-medium">
-                      {forecast.precipitation_sum} mm
+                      {forecast.precipitation_sum.toFixed(1)} mm
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Hours:</span>
                     <span className="font-medium">
-                      {forecast.precipitation_hours} hrs
+                      {forecast.precipitation_hours.toFixed(1)} hrs
                     </span>
                   </div>
                 </div>
@@ -139,19 +139,19 @@ export function WeatherDetail({ date }: WeatherDetailProps) {
                   <div className="flex justify-between">
                     <span>Speed:</span>
                     <span className="font-medium">
-                      {forecast.windspeed_10m_max} km/h
+                      {forecast.windspeed_10m_max.toFixed(1)} km/h
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Direction:</span>
                     <span className="font-medium">
-                      {forecast.winddirection_10m_dominant}°
+                      {forecast.winddirection_10m_dominant.toFixed(1)}°
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Gusts:</span>
                     <span className="font-medium">
-                      {forecast.windgusts_10m_max} km/h
+                      {forecast.windgusts_10m_max.toFixed(1)} km/h
                     </span>
                   </div>
                 </div>
@@ -169,13 +169,13 @@ export function WeatherDetail({ date }: WeatherDetailProps) {
                   <div className="flex justify-between">
                     <span>Humidity:</span>
                     <span className="font-medium">
-                      {forecast.relativehumidity_2m_max}%
+                      {forecast.relativehumidity_2m_max.toFixed(1)}%
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Cloud Cover:</span>
                     <span className="font-medium">
-                      {forecast.cloudcover_max}%
+                      {forecast.cloudcover_max.toFixed(1)}%
                     </span>
                   </div>
                 </div>
@@ -270,7 +270,7 @@ export function WeatherDetail({ date }: WeatherDetailProps) {
                     <div className="flex justify-between">
                       <span>Avg Humidity:</span>
                       <span className="font-medium">
-                        {historical.relativehumidity_2m_max.avg.toFixed(0)}%
+                        {historical.relativehumidity_2m_max.avg.toFixed(1)}%
                       </span>
                     </div>
                     <div className="flex justify-between">

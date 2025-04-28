@@ -23,7 +23,7 @@ export function DayCard({
   const isToday = format(new Date(), 'yyyy-MM-dd') === date;
 
   // Default values if forecast is not available
-  const temp = forecast?.temperature_2m_max ?? 'N/A';
+  const temp = forecast?.temperature_2m_max?.toFixed(1) ?? 'N/A';
   const precipitation = forecast?.precipitation_probability_max ?? 0;
 
   const suitability = forecast ? getPicnicSuitability(forecast) : 'unknown';
