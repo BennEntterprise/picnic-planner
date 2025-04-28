@@ -6,7 +6,7 @@ import {
   type ReactNode,
 } from 'react';
 import { formatDate, getDatesForNextTwoWeeks } from '@/lib/date-utils';
-import { mockForecastData, mockHistoricalData } from '@/lib/mock-data';
+import { mockHistoricalData } from '@/lib/mock-data';
 import type {
   DailyForecastList,
   HistoricalData,
@@ -17,21 +17,23 @@ import { fetchForecastData } from '@/lib/api';
 const WeatherContext = createContext<WeatherContextType | undefined>(undefined);
 
 export function WeatherProvider({ children }: { children: ReactNode }) {
-  const [forecastData] = useState<DailyForecastList>(mockForecastData);
-  // const [forecastData, setForecastData] = useState<DailyForecastList>([]);
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const data = await fetchForecastData().then((data) => {
-  //         return data;
-  //       });
-  //       setForecastData(mockForecastData);
-  //     } catch (error) {
-  //       console.error('Error fetching forecast data:', error);
-  //     }
-  //   }
-  //   fetchData();
-  // });
+  const [forecastData, setForecastData] = useState<DailyForecastList>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const dataFromForecastAPI = await fetchForecastData().catch((error) => {
+          console.error('Error fetching forecast data:', error);
+        });
+        if (!dataFromForecastAPI) return; // TODO: Show some UI Feedback for failed fetch
+        setForecastData(dataFromForecastAPI);
+      } catch (error) {
+        console.error('Error fetching forecast data:', error);
+      }
+    }
+    fetchData();
+  }, []);
+
   const [historicalData] =
     useState<Record<string, HistoricalData>>(mockHistoricalData);
   const [selectedDate, setSelectedDate] = useState<string | null>(
@@ -48,7 +50,7 @@ export function WeatherProvider({ children }: { children: ReactNode }) {
   async function loadHistoricalDataForDate(date: string) {
     // Historical data is already loaded from mock data
     // This is just a placeholder function
-    console.log(date);
+    console.info(`Loading historical data for date: ${date}`);
     return Promise.resolve();
   }
 

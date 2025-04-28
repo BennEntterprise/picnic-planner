@@ -21,7 +21,7 @@ interface IWeatherService {
    * @param id - The location id to look up.
    * @returns A single day forecast for the location.
    */
-  getForecast(id: string | number): Promise<any>;
+  getForecast(id: string | number): Promise<DailyForecastList>;
 }
 
 export type { Coords, IWeatherService };

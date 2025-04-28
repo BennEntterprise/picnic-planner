@@ -19,22 +19,24 @@ class OpenMeteoWeatherService implements IWeatherService {
     }
   }
 
-  async getForecast(id: string | number): Promise<any> {
+  async getForecast(id: string | number): Promise<DailyForecastList> {
+    // TODO: Debt, This is messy with probably too many translation layers that could be simplified.
     const params = {
-      latitude: 40.451147,
-      longitude: -79.900948,
+      latitude: 52.52,
+      longitude: 13.41,
       daily: [
         'temperature_2m_max',
         'temperature_2m_min',
         'apparent_temperature_max',
-        'weather_code',
-        'showers_sum',
-        'snowfall_sum',
-        'rain_sum',
+        'precipitation_sum',
+        'precipitation_hours',
         'precipitation_probability_max',
+        'wind_speed_10m_max',
+        'wind_gusts_10m_max',
+        'wind_direction_10m_dominant',
+        'uv_index_max',
       ],
-      hourly: 'uv_index',
-      timezone: 'America/New_York',
+      hourly: ['temperature_2m', 'relative_humidity_2m', 'cloud_cover_high'],
       forecast_days: 14,
     };
     const url = 'https://api.open-meteo.com/v1/forecast';
@@ -70,7 +72,9 @@ class OpenMeteoWeatherService implements IWeatherService {
                 1000,
             ),
         ),
-        uvIndex: hourly.variables(0)!.valuesArray()!,
+        temperature2m: hourly.variables(0)!.valuesArray()!,
+        relativeHumidity2m: hourly.variables(1)!.valuesArray()!,
+        cloudCoverHigh: hourly.variables(2)!.valuesArray()!,
       },
       daily: {
         time: [
@@ -87,35 +91,54 @@ class OpenMeteoWeatherService implements IWeatherService {
         temperature2mMax: daily.variables(0)!.valuesArray()!,
         temperature2mMin: daily.variables(1)!.valuesArray()!,
         apparentTemperatureMax: daily.variables(2)!.valuesArray()!,
-        weatherCode: daily.variables(3)!.valuesArray()!,
-        showersSum: daily.variables(4)!.valuesArray()!,
-        snowfallSum: daily.variables(5)!.valuesArray()!,
-        rainSum: daily.variables(6)!.valuesArray()!,
-        precipitationProbabilityMax: daily.variables(7)!.valuesArray()!,
+        precipitationSum: daily.variables(3)!.valuesArray()!,
+        precipitationHours: daily.variables(4)!.valuesArray()!,
+        precipitationProbabilityMax: daily.variables(5)!.valuesArray()!,
+        windSpeed10mMax: daily.variables(6)!.valuesArray()!,
+        windGusts10mMax: daily.variables(7)!.valuesArray()!,
+        windDirection10mDominant: daily.variables(8)!.valuesArray()!,
+        uvIndexMax: daily.variables(9)!.valuesArray()!,
       },
     };
 
-    // `weatherData` now contains a simple structure with arrays for datetime and weather data
-    for (let i = 0; i < weatherData.hourly.time.length; i++) {
-      console.log(
-        weatherData.hourly.time[i].toISOString(),
-        weatherData.hourly.uvIndex[i],
-      );
-    }
+    const listOfDays = [];
     for (let i = 0; i < weatherData.daily.time.length; i++) {
-      console.log(
-        weatherData.daily.time[i].toISOString(),
-        weatherData.daily.temperature2mMax[i],
-        weatherData.daily.temperature2mMin[i],
-        weatherData.daily.apparentTemperatureMax[i],
-        weatherData.daily.weatherCode[i],
-        weatherData.daily.showersSum[i],
-        weatherData.daily.snowfallSum[i],
-        weatherData.daily.rainSum[i],
-        weatherData.daily.precipitationProbabilityMax[i],
-      );
+      const date = weatherData.daily.time[i];
+      const temperature_2m_max = weatherData.daily.temperature2mMax[i];
+      const temperature_2m_min = weatherData.daily.temperature2mMin[i];
+      const apparent_temperature_max =
+        weatherData.daily.apparentTemperatureMax[i];
+      const precipitation_sum = weatherData.daily.precipitationSum[i];
+      const precipitation_hours = weatherData.daily.precipitationHours[i];
+      const precipitation_probability_max =
+        weatherData.daily.precipitationProbabilityMax[i];
+      const windspeed_10m_max = weatherData.daily.windSpeed10mMax[i];
+      const windgusts_10m_max = weatherData.daily.windGusts10mMax[i];
+      const winddirection_10m_dominant =
+        weatherData.daily.windDirection10mDominant[i];
+      const uv_index_max = weatherData.daily.uvIndexMax[i];
+      const relativehumidity_2m_max = weatherData.hourly.relativeHumidity2m[i];
+      const cloudcover_max = weatherData.hourly.cloudCoverHigh[i];
+      const weatherForecastItem: DailyForecast = {
+        date: date.toISOString().split('T')[0],
+        temperature_2m_max,
+        temperature_2m_min,
+        apparent_temperature_max,
+        precipitation_sum,
+        precipitation_hours,
+        precipitation_probability_max,
+        windspeed_10m_max,
+        windgusts_10m_max,
+        winddirection_10m_dominant,
+        uv_index_max,
+        relativehumidity_2m_max,
+        cloudcover_max,
+      };
+      listOfDays.push(weatherForecastItem);
     }
-    return weatherData;
+    const weatherForecast: DailyForecastList = [];
+
+    return listOfDays;
   }
 
   async getLatLongFromZip(zipCode: string): Promise<Coords> {

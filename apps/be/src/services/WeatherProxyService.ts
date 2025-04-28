@@ -24,7 +24,7 @@ class WeatherServiceProxy implements IWeatherService {
       .catch(console.error);
   }
 
-  async getForecast(id: string | number): Promise<any> {
+  async getForecast(id: string | number): Promise<DailyForecastList> {
     return this.realService.getForecast(id);
   }
 
