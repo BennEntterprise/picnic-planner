@@ -43,3 +43,13 @@ npm run format:check
 ```
 
 * If you fail an `npm run format:check` you can use `npm run format` to forcibly fix any files that can be auto-fixed
+
+## About Redis
+
+Part of the docker compose includes a redis cache instance. You can inspect the cache using the `Exec` tab of the Docker GUI to get a shell into the image. From there the `redis-cli` is available.
+
+There are also other methods of connecting redis (either via your own host terminal or GUIs) but I leave that up to your discretion.
+
+## About Bruno
+
+[Bruno](https://www.usebruno.com/) is an api testing tool similar to postman. This repo contains a collection of requests that you can open a [./apps/be/picnic-planner-bruno-requests/](./apps/be/picnic-planner-bruno-requests/). If you add/remove/change an API endpoint, please also ensure that Bruno is reflected for others to test the API.
